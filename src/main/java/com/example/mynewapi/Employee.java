@@ -1,7 +1,14 @@
 package com.example.mynewapi;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "employees")
 public class Employee {
 
+    @Id
     private String employeeId;
     private String name;
     private String department;
@@ -18,11 +25,23 @@ public class Employee {
         return employeeId;
     }
 
+    public void setEmployeeId(String employeeId) {
+        this.employeeId = employeeId;
+    }
+
     public String getName() {
         return name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public String getDepartment() {
         return department;
+    }
+
+    public void setDepartment(String department) {
+        this.department = department;
     }
 }

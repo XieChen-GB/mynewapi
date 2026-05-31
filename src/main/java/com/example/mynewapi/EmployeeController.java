@@ -7,11 +7,16 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
 public class EmployeeController {
+
+    private final EmployeeService employeeService;
+
+    public EmployeeController(EmployeeService employeeService) {
+        this.employeeService = employeeService;
+    }
 
     @GetMapping("/hello")
     public String hello() {
@@ -25,43 +30,21 @@ public class EmployeeController {
 
     @GetMapping("/employees")
     public List<Employee> getEmployees() {
-        List<Employee> employees = new ArrayList<>();
-        employees.add(new Employee("003561", "谢晨", "電算室"));
-        employees.add(new Employee("003562", "田中太郎", "営業部"));
-        employees.add(new Employee("003563", "李明", "技術部"));
-        return employees;
+        return employeeService.getAllEmployees();
     }
 
     @GetMapping("/employees/{employeeId}")
     public Employee getEmployeeByEmployeeId(@PathVariable String employeeId) {
-        List<Employee> employees = new ArrayList<>();
-        employees.add(new Employee("003561", "谢晨", "電算室"));
-        employees.add(new Employee("003562", "田中太郎", "営業部"));
-        employees.add(new Employee("003563", "李明", "技術部"));
-        for (Employee employee : employees) {
-            if (employee.getEmployeeId().equals(employeeId)) {
-                return employee;
-            }
-        }
-        return null;
+        return employeeService.getEmployeeById(employeeId).orElse(null);
     }
 
     @GetMapping("/employees/search")
     public Employee searchEmployee(@RequestParam String name) {
-        List<Employee> employees = new ArrayList<>();
-        employees.add(new Employee("003561", "谢晨", "電算室"));
-        employees.add(new Employee("003562", "田中太郎", "営業部"));
-        employees.add(new Employee("003563", "李明", "技術部"));
-        for (Employee employee : employees) {
-            if (employee.getName().equals(name)) {
-                return employee;
-            }
-        }
-        return null;
+        return employeeService.searchByName(name).orElse(null);
     }
 
     @PostMapping("/employees")
     public List<Employee> addEmployees(@RequestBody List<Employee> employees) {
-        return employees;
+        return employeeService.addEmployees(employees);
     }
 }
