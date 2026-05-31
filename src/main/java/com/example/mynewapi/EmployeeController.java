@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-public class EmpoyeeController {
+public class EmployeeController {
 
     @GetMapping("/hello")
     public String hello() {
